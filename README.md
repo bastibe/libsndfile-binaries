@@ -11,9 +11,9 @@ is built-in statically.
 DLLs for Windows (32-bit and 64-bit)
 ------------------------------------
 
-The DLLs were created on a Debian GNU/Linux system using using
+The DLLs were created on a Debian GNU/Linux system using
 [MXE](http://mxe.cc/) with the following commands (after installing the
-[dependencies](http://mxe.cc/#requirements) plus `libtool-bin`):
+[dependencies](http://mxe.cc/#requirements)):
 
     JOBS=8
     git clone https://github.com/mxe/mxe.git
