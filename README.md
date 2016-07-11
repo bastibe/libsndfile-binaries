@@ -12,7 +12,9 @@ DLLs for Windows (32-bit and 64-bit)
 ------------------------------------
 
 The DLLs were created on a Debian GNU/Linux system using
-[MXE](http://mxe.cc/) with the following commands (after installing the
+[MXE](http://mxe.cc/) ([this version](https://github.com/mxe/mxe/tree/2ee728cf99c0fe022e3fa9fddd0cfa41d79c8111), using
+[libsndfile-1.0.27.tar.gz](http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.27.tar.gz))
+with the following commands (after installing the
 [dependencies](http://mxe.cc/#requirements)):
 
     JOBS=8
@@ -35,14 +37,11 @@ dylib for Mac OS X (64-bit)
 The dylib was created on a Mac OS X system using the following commands
 (after installing the necessary programs like make, GCC, ...):
 
-    # Make sure that you don't have libogg.dylib already installed!
-    # If you have such a file, you should temporarily rename it.
-
     JOBS=8
     OGGNAME=libogg-1.3.2
     VORBISNAME=libvorbis-1.3.5
     FLACNAME=flac-1.3.1
-    SNDFILENAME=libsndfile-1.0.25
+    SNDFILENAME=libsndfile-1.0.27
     OGG_INCDIR="$(pwd)/$OGGNAME/include"
     OGG_LIBDIR="$(pwd)/$OGGNAME/src/.libs"
 
@@ -76,14 +75,9 @@ The dylib was created on a Mac OS X system using the following commands
 
     # libsndfile
 
+    export PKG_CONFIG_PATH="$(pwd)/$OGGNAME:$(pwd)/$VORBISNAME"
     export FLAC_CFLAGS="-I$(pwd)/$FLACNAME/include"
-    # to compensate for a typo in configure.ac:
-    export FLAC_CLFAGS=$FLAC_CFLAGS
-    export OGG_CFLAGS="-I$OGG_INCDIR"
-    export VORBISENC_CFLAGS="-I$(pwd)/$VORBISNAME/include"
-    # disable pkg-config:
-    export PKG_CONFIG=true
-    export LIBS="$(pwd)/$FLACNAME/src/libFLAC/libFLAC.la -logg -L$OGG_LIBDIR $(pwd)/$VORBISNAME/lib/libvorbis.la $(pwd)/$VORBISNAME/lib/libvorbisenc.la"
+    export FLAC_LIBS="$(pwd)/$FLACNAME/src/libFLAC/libFLAC.la"
 
     curl -O http://www.mega-nerd.com/libsndfile/files/$SNDFILENAME.tar.gz
     tar xvzf $SNDFILENAME.tar.gz
