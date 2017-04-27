@@ -12,17 +12,16 @@ DLLs for Windows (32-bit and 64-bit)
 ------------------------------------
 
 The DLLs were created on a Debian GNU/Linux system using
-[MXE](http://mxe.cc/) ([this version](https://github.com/mxe/mxe/tree/2ee728cf99c0fe022e3fa9fddd0cfa41d79c8111), using
-[libsndfile-1.0.27.tar.gz](http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.27.tar.gz))
+[MXE](http://mxe.cc/) ([this version](https://github.com/mxe/mxe/tree/9e5f267e02e3aaa676d910dde572c848650cc04e), using
+[libsndfile-1.0.28.tar.gz](http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.28.tar.gz))
 with the following commands (after installing the
 [dependencies](http://mxe.cc/#requirements)):
 
-    JOBS=8
     git clone https://github.com/mxe/mxe.git
     export PATH=$(pwd)"/mxe/usr/bin:$PATH"
     for TARGET in x86_64-w64-mingw32.static i686-w64-mingw32.static
     do
-        make -C mxe libsndfile -j$JOBS JOBS=$JOBS MXE_TARGETS=$TARGET
+        make -C mxe libsndfile MXE_TARGETS=$TARGET
         $TARGET-gcc -O2 -shared -o libsndfile-$TARGET.dll -Wl,--whole-archive -lsndfile -Wl,--no-whole-archive -lvorbis -lvorbisenc -logg -lFLAC
         $TARGET-strip libsndfile-$TARGET.dll
         chmod -x libsndfile-$TARGET.dll
@@ -34,16 +33,22 @@ with the following commands (after installing the
 dylib for Mac OS X (64-bit)
 ---------------------------
 
-The dylib was created on a Mac OS X system using the following commands
-(after installing the necessary programs like make, GCC, ...):
+The dylib was created on a macOS system using XCode.
+The XCode CLI tools were installed with:
+
+    xcode-select --install
+
+The following commands were used for compilation:
 
     JOBS=8
     OGGNAME=libogg-1.3.2
     VORBISNAME=libvorbis-1.3.5
-    FLACNAME=flac-1.3.1
-    SNDFILENAME=libsndfile-1.0.27
+    FLACNAME=flac-1.3.2
+    SNDFILENAME=libsndfile-1.0.28
     OGG_INCDIR="$(pwd)/$OGGNAME/include"
     OGG_LIBDIR="$(pwd)/$OGGNAME/src/.libs"
+
+    export MACOSX_DEPLOYMENT_TARGET=10.6
 
     # libogg
 
