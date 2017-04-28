@@ -92,6 +92,7 @@ The following commands were used for compilation:
     cd ..
 
     cp -i $SNDFILENAME/src/.libs/libsndfile.1.dylib libsndfile.dylib
+    chmod -x libsndfile.dylib
 
 
 Copyright
