@@ -1,9 +1,10 @@
-JOBS=8
 OGGNAME=libogg-1.3.4
 VORBISNAME=libvorbis-1.3.7
 FLACNAME=flac-1.3.3
 OPUSNAME=opus-1.3.1
 SNDFILE_VERSION=1.0.30
+
+JOBS=8
 SNDFILENAME=libsndfile-$SNDFILE_VERSION
 OGG_INCDIR="$(pwd)/$OGGNAME/include"
 OGG_LIBDIR="$(pwd)/$OGGNAME/src/.libs"
