@@ -38,62 +38,18 @@ The XCode CLI tools were installed with:
 
     xcode-select --install
 
-The following commands were used for compilation:
+Edit the versions of required libraries in the `mac_build.sh` file
 
-    JOBS=8
-    OGGNAME=libogg-1.3.2
-    VORBISNAME=libvorbis-1.3.5
-    FLACNAME=flac-1.3.2
-    SNDFILENAME=libsndfile-1.0.28
-    OGG_INCDIR="$(pwd)/$OGGNAME/include"
-    OGG_LIBDIR="$(pwd)/$OGGNAME/src/.libs"
+    OGGNAME=libogg-1.3.4
+    VORBISNAME=libvorbis-1.3.7
+    FLACNAME=flac-1.3.3
+    OPUSNAME=opus-1.3.1
+    SNDFILE_VERSION=1.0.30
 
-    export MACOSX_DEPLOYMENT_TARGET=10.6
 
-    # libogg
+Run the script to build `libsndfile.dylib`
 
-    curl -O http://downloads.xiph.org/releases/ogg/$OGGNAME.tar.gz
-    tar xvf $OGGNAME.tar.gz
-    cd $OGGNAME
-    ./configure --disable-shared
-    make -j$JOBS
-    cd ..
-
-    # libvorbis
-
-    curl -O http://downloads.xiph.org/releases/vorbis/$VORBISNAME.tar.gz
-    tar xvf $VORBISNAME.tar.gz
-    cd $VORBISNAME
-    ./configure --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR
-    make -j$JOBS
-    cd ..
-
-    # libFLAC
-
-    curl -O http://downloads.xiph.org/releases/flac/$FLACNAME.tar.xz
-    unxz $FLACNAME.tar.xz
-    tar xvf $FLACNAME.tar
-    cd $FLACNAME
-    ./configure --enable-static --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR
-    make -j$JOBS
-    cd ..
-
-    # libsndfile
-
-    export PKG_CONFIG_PATH="$(pwd)/$OGGNAME:$(pwd)/$VORBISNAME"
-    export FLAC_CFLAGS="-I$(pwd)/$FLACNAME/include"
-    export FLAC_LIBS="$(pwd)/$FLACNAME/src/libFLAC/libFLAC.la"
-
-    curl -O http://www.mega-nerd.com/libsndfile/files/$SNDFILENAME.tar.gz
-    tar xvzf $SNDFILENAME.tar.gz
-    cd $SNDFILENAME
-    ./configure --disable-static --disable-sqlite --disable-alsa
-    make -j$JOBS
-    cd ..
-
-    cp -i $SNDFILENAME/src/.libs/libsndfile.1.dylib libsndfile.dylib
-    chmod -x libsndfile.dylib
-
+    ./mac_build.sh
 
 Copyright
 ---------
