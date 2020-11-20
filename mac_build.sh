@@ -1,3 +1,8 @@
+#!/bin/sh
+
+# exit when any command fails
+set -e
+
 OGGNAME=libogg-1.3.4
 VORBISNAME=libvorbis-1.3.7
 FLACNAME=flac-1.3.3
@@ -16,6 +21,9 @@ export MACOSX_DEPLOYMENT_TARGET=10.9
 curl -LO https://downloads.xiph.org/releases/ogg/$OGGNAME.tar.gz
 tar zxvf $OGGNAME.tar.gz
 cd $OGGNAME
+# See https://gitlab.xiph.org/xiph/ogg/-/issues/1747
+curl -L https://gitlab.xiph.org/xiph/ogg/-/commit/c8fca6b4a02d695b1ceea39b330d4406001c03ed.diff -o uint.patch
+patch -p1 <uint.patch
 ./configure --disable-shared
 make -j$JOBS
 cd ..
@@ -32,7 +40,7 @@ cd ..
 # libFLAC
 
 curl -LO https://downloads.xiph.org/releases/flac/$FLACNAME.tar.xz
-unxz $FLACNAME.tar.xz
+unxz -f $FLACNAME.tar.xz
 tar zxvf $FLACNAME.tar
 cd $FLACNAME
 ./configure --enable-static --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR

@@ -38,16 +38,7 @@ The XCode CLI tools were installed with:
 
     xcode-select --install
 
-Edit the versions of required libraries in the `mac_build.sh` file
-
-    OGGNAME=libogg-1.3.4
-    VORBISNAME=libvorbis-1.3.7
-    FLACNAME=flac-1.3.3
-    OPUSNAME=opus-1.3.1
-    SNDFILE_VERSION=1.0.30
-
-
-Run the script to build `libsndfile.dylib`
+Edit the versions of required libraries in the `mac_build.sh` file, then run the script to build `libsndfile.dylib`:
 
     ./mac_build.sh
 
