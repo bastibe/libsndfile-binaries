@@ -42,3 +42,5 @@ Copyright
 * FLAC by Josh Coalson and Xiph.Org Foundation, 3-clause BSD License.
 
 * Ogg Vorbis by Xiph.Org Foundation, 3-clause BSD License.
+
+* Opus by Xiph.Org Foundation and Broadcom and Microsoft, 3-clause BSD License.
