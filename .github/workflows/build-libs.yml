@@ -22,3 +22,27 @@ jobs:
           path: "libsndfile.dylib"
           retention-days: 7
           if-no-files-found: error
+
+  build-libs-windows:
+    runs-on: windows-2016
+    strategy:
+      matrix:
+        include:
+        - triplet: "x64-windows-custom"
+          libname: "libsndfile_x64.dll"
+        - triplet: "x86-windows-custom"
+          libname: "libsndfile_x86.dll"
+      fail-fast: true
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build library
+        run: "vcpkg install libsndfile:${{ matrix.triplet }} --overlay-triplets=triplets"
+      - name: Copy library
+        run: "Copy-Item c:/vcpkg/installed/${{ matrix.triplet }}/bin/sndfile.dll -Destination ${{ matrix.libname }}"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: lib
+          path: ${{ matrix.libname }}
+          retention-days: 7
+          if-no-files-found: error
