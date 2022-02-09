@@ -1,0 +1,24 @@
+name: Compile Libraries
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-libs:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["macos-11"]
+      fail-fast: true
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Compile library
+        run: ./mac_build.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: libs
+          path: "*.dylib"
+          retention-days: 7
+          if-no-files-found: error
