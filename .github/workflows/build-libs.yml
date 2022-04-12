@@ -36,8 +36,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Update VCPKG
+        run: "vcpkg update"
       - name: Build library
-        run: "vcpkg install libsndfile:${{ matrix.triplet }} -v 1.1.0 --overlay-triplets=triplets"
+        run: "vcpkg install libsndfile:${{ matrix.triplet }} --overlay-triplets=triplets"
       - name: Copy library
         run: "Copy-Item c:/vcpkg/installed/${{ matrix.triplet }}/bin/sndfile.dll -Destination ${{ matrix.libname }}"
       - uses: actions/upload-artifact@v2
