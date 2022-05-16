@@ -3,6 +3,7 @@ name: Compile Libraries (macOS/Intel)
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build-libs:
