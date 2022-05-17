@@ -88,7 +88,7 @@ export LAME_LIBS="$(pwd)/lame-$LAMEVERSION/libmp3lame/.libs/libmp3lame.la"
 curl -LO https://github.com/libsndfile/libsndfile/releases/download/$SNDFILE_VERSION/libsndfile-$SNDFILE_VERSION.tar.xz
 tar jxvf libsndfile-$SNDFILE_VERSION.tar.xz
 cd $SNDFILENAME
-./configure --disable-static --disable-sqlite --disable-alsa --enable-werror
+./configure --disable-static --disable-sqlite --disable-alsa 
 make -j$JOBS
 cd ..
 
