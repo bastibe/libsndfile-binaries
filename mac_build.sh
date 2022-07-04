@@ -80,10 +80,9 @@ export VORBISENC_CFLAGS="-I$(pwd)/libvorbis-$VORBISVERSION/include"
 export VORBISENC_LIBS="$(pwd)/libvorbis-$VORBISVERSION/lib/libvorbisenc.la"
 export OPUS_CFLAGS="-I$(pwd)/opus-$OPUSVERSION/include"
 export OPUS_LIBS="$(pwd)/opus-$OPUSVERSION/libopus.la"
-export MPG123_CFLAGS="-I$(pwd)/mpg123-$MPG123VERSION/src/libmpg123/"
-export MPG123_LIBS="$(pwd)/mpg123-$MPG123VERSION/src/libmpg123/libmpg123.la"
-export LAME_CFLAGS="-I$(pwd)/lame-$LAMEVERSION/include"
-export LAME_LIBS="$(pwd)/lame-$LAMEVERSION/libmp3lame/.libs/libmp3lame.la"
+# apparently, the MPG123-variables are used for both MPG123 and lame
+export MPG123_CFLAGS="-I$(pwd)/mpg123-$MPG123VERSION/src/libmpg123/ -I$(pwd)/lame-$LAMEVERSION/include"
+export MPG123_LIBS="$(pwd)/mpg123-$MPG123VERSION/src/libmpg123/libmpg123.la $LAME_LIBS$(pwd)/lame-$LAMEVERSION/libmp3lame/.libs/libmp3lame.la"
 
 curl -LO https://github.com/libsndfile/libsndfile/releases/download/$SNDFILE_VERSION/libsndfile-$SNDFILE_VERSION.tar.xz
 tar jxvf libsndfile-$SNDFILE_VERSION.tar.xz
