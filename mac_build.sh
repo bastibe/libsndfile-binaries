@@ -11,14 +11,27 @@ SNDFILENAME=libsndfile-$SNDFILE_VERSION
 OGG_INCDIR="$(pwd)/libogg-$OGGVERSION/include"
 OGG_LIBDIR="$(pwd)/libogg-$OGGVERSION/src/.libs"
 
-export MACOSX_DEPLOYMENT_TARGET=10.9
+if [ "$1" = "arm64" ]; then
+    echo "Cross compiling for Darwin arm64.."
+    export MACOSX_DEPLOYMENT_TARGET=11.0
+
+    BUILD_HOST="--host=aarch64-apple-darwin"
+    XCORR_FLAGS="-arch arm64 -target arm64-apple-macos11"
+
+    export CFLAGS=$XCORR_FLAGS
+    export CXXFLAGS=$XCORR_FLAGS
+else
+    echo "Building for Darwin $(uname -m).."
+    export MACOSX_DEPLOYMENT_TARGET=10.9
+    BUILD_HOST=""
+fi
 
 # libogg
 
 curl -LO https://downloads.xiph.org/releases/ogg/libogg-$OGGVERSION.tar.gz
 tar zxvf libogg-$OGGVERSION.tar.gz
 cd libogg-$OGGVERSION
-./configure --disable-shared
+./configure $BUILD_HOST --disable-shared
 make -j$JOBS
 cd ..
 
@@ -27,7 +40,7 @@ cd ..
 curl -LO https://downloads.xiph.org/releases/vorbis/libvorbis-$VORBISVERSION.tar.gz
 tar zxvf libvorbis-$VORBISVERSION.tar.gz
 cd libvorbis-$VORBISVERSION
-./configure --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR
+./configure $BUILD_HOST --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR
 make -j$JOBS
 cd ..
 
@@ -37,7 +50,7 @@ curl -LO https://downloads.xiph.org/releases/flac/flac-$FLACVERSION.tar.xz
 unxz flac-$FLACVERSION.tar.xz
 tar zxvf flac-$FLACVERSION.tar
 cd flac-$FLACVERSION
-./configure --enable-static --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR
+./configure $BUILD_HOST --enable-static --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR
 make -j$JOBS
 cd ..
 
@@ -46,7 +59,7 @@ cd ..
 curl -LO https://archive.mozilla.org/pub/opus/opus-$OPUSVERSION.tar.gz
 tar zxvf opus-$OPUSVERSION.tar.gz
 cd opus-$OPUSVERSION
-./configure --disable-shared
+./configure $BUILD_HOST --disable-shared
 make -j$JOBS
 cd ..
 
@@ -55,7 +68,7 @@ cd ..
 curl -LO https://sourceforge.net/projects/mpg123/files/mpg123/$MPG123VERSION/mpg123-$MPG123VERSION.tar.bz2
 tar zxvf mpg123-$MPG123VERSION.tar.bz2
 cd mpg123-$MPG123VERSION
-./configure --enable-static --disable-shared
+./configure $BUILD_HOST --enable-static --disable-shared
 make -j$JOBS
 cd ..
 
@@ -64,7 +77,25 @@ cd ..
 curl -LO https://sourceforge.net/projects/lame/files/lame/$LAMEVERSION/lame-$LAMEVERSION.tar.gz
 tar zxvf lame-$LAMEVERSION.tar.gz
 cd lame-$LAMEVERSION
-./configure --enable-static --disable-shared
+./configure $BUILD_HOST --enable-static --disable-shared
+make -j$JOBS
+cd ..
+
+# mpg123
+
+curl -LO https://sourceforge.net/projects/mpg123/files/mpg123/$MPG123VERSION/mpg123-$MPG123VERSION.tar.bz2
+tar zxvf mpg123-$MPG123VERSION.tar.bz2
+cd mpg123-$MPG123VERSION
+./configure $BUILD_HOST --enable-static --disable-shared
+make -j$JOBS
+cd ..
+
+# liblame
+
+curl -LO https://sourceforge.net/projects/lame/files/lame/$LAMEVERSION/lame-$LAMEVERSION.tar.gz
+tar zxvf lame-$LAMEVERSION.tar.gz
+cd lame-$LAMEVERSION
+./configure $BUILD_HOST --enable-static --disable-shared
 make -j$JOBS
 cd ..
 
@@ -88,7 +119,7 @@ export MPG123_LIBS="$(pwd)/mpg123-$MPG123VERSION/src/libmpg123/libmpg123.la $LAM
 curl -LO https://github.com/libsndfile/libsndfile/releases/download/$SNDFILE_VERSION/libsndfile-$SNDFILE_VERSION.tar.xz
 tar jxvf libsndfile-$SNDFILE_VERSION.tar.xz
 cd $SNDFILENAME
-./configure --disable-static --disable-sqlite --disable-alsa
+./configure $BUILD_HOST --disable-static --disable-sqlite --disable-alsa
 make -j$JOBS
 cd ..
 
