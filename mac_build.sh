@@ -81,24 +81,6 @@ cd lame-$LAMEVERSION
 make -j$JOBS
 cd ..
 
-# mpg123
-
-curl -LO https://sourceforge.net/projects/mpg123/files/mpg123/$MPG123VERSION/mpg123-$MPG123VERSION.tar.bz2
-tar zxvf mpg123-$MPG123VERSION.tar.bz2
-cd mpg123-$MPG123VERSION
-./configure $BUILD_HOST --enable-static --disable-shared
-make -j$JOBS
-cd ..
-
-# liblame
-
-curl -LO https://sourceforge.net/projects/lame/files/lame/$LAMEVERSION/lame-$LAMEVERSION.tar.gz
-tar zxvf lame-$LAMEVERSION.tar.gz
-cd lame-$LAMEVERSION
-./configure $BUILD_HOST --enable-static --disable-shared
-make -j$JOBS
-cd ..
-
 # libsndfile
 
 export FLAC_CFLAGS="-I$(pwd)/flac-$FLACVERSION/include"
