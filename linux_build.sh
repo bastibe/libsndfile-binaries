@@ -98,16 +98,11 @@ cp opus-$OPUSVERSION/include/*.h opus-$OPUSVERSION/include/opus
 mkdir -p lame-$LAMEVERSION/include/lame
 cp lame-$LAMEVERSION/include/*.h lame-$LAMEVERSION/include/lame
 
-find . -name "*.a"
-
 curl -LO https://github.com/libsndfile/libsndfile/releases/download/$SNDFILE_VERSION/libsndfile-$SNDFILE_VERSION.tar.xz
 tar xvf libsndfile-$SNDFILE_VERSION.tar.xz
 cd $SNDFILENAME
-make clean
 ./configure --disable-static --disable-sqlite --disable-alsa && make -j$JOBS
 cd ..
-
-find $SNDFILENAME -name "*.so"
 
 cp $SNDFILENAME/src/.libs/libsndfile.so libsndfile.so
 chmod -x libsndfile.so
