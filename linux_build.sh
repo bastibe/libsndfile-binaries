@@ -37,7 +37,7 @@ cd ..
 # libFLAC
 
 curl -LO https://downloads.xiph.org/releases/flac/flac-$FLACVERSION.tar.xz
-tar xvf flac-$FLACVERSION.tar.gz
+tar xvf flac-$FLACVERSION.tar.xz
 cd flac-$FLACVERSION
 ./configure --enable-static --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR
 make -j$JOBS
@@ -109,5 +109,5 @@ cd ..
 
 find $SNDFILENAME -name "*.so"
 
-cp `realpath $SNDFILENAME/src/.libs/libsndfile.so` libsndfile.so
+cp $SNDFILENAME/src/.libs/libsndfile.so libsndfile.so
 chmod -x libsndfile.so
