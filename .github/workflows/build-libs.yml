@@ -1,4 +1,4 @@
-name: Compile Libraries (macOS/Intel)
+name: Compile Libraries
 
 on:
   push:
