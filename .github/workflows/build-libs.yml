@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-libs:
+  build-libs-macos:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -21,6 +21,24 @@ jobs:
         with:
           name: lib
           path: "libsndfile.dylib"
+          retention-days: 7
+          if-no-files-found: error
+
+  build-libs-linux:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["ubuntu-20.04"]
+      fail-fast: true
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Compile library
+        run: ./linux_build.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: lib
+          path: "libsndfile.so"
           retention-days: 7
           if-no-files-found: error
 
