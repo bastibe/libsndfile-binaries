@@ -14,10 +14,10 @@ jobs:
       fail-fast: true
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Compile library
         run: ./mac_build.sh
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: lib
           path: "libsndfile.dylib"
@@ -32,10 +32,10 @@ jobs:
       fail-fast: true
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Compile library
         run: ./linux_build.sh
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: lib
           path: "libsndfile.so"
@@ -54,14 +54,14 @@ jobs:
       fail-fast: true
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Update VCPKG
         run: "vcpkg update"
       - name: Build library
         run: "vcpkg install libsndfile:${{ matrix.triplet }} --overlay-triplets=triplets"
       - name: Copy library
         run: "Copy-Item c:/vcpkg/installed/${{ matrix.triplet }}/bin/sndfile.dll -Destination ${{ matrix.libname }}"
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: lib
           path: ${{ matrix.libname }}
