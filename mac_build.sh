@@ -1,6 +1,6 @@
 OGGVERSION=1.3.5
 VORBISVERSION=1.3.7
-FLACVERSION=1.3.3
+FLACVERSION=1.4.2
 OPUSVERSION=1.3.1
 MPG123VERSION=1.30.2
 LAMEVERSION=3.100
@@ -98,7 +98,7 @@ export MPG123_LIBS="$(pwd)/mpg123-$MPG123VERSION/src/libmpg123/libmpg123.la $MPE
 curl -LO https://github.com/libsndfile/libsndfile/releases/download/$SNDFILE_VERSION/libsndfile-$SNDFILE_VERSION.tar.xz
 tar jxvf libsndfile-$SNDFILE_VERSION.tar.xz
 cd $SNDFILENAME
-./configure $BUILD_HOST --disable-static --disable-sqlite --disable-alsa --disable-full-suite
+CFLAGS=$EXTRA_CFLAGS CXXFLAGS=$EXTRA_CFLAGS ./configure $BUILD_HOST --disable-static --disable-sqlite --disable-alsa --disable-full-suite
 make -j$JOBS
 cd ..
 
