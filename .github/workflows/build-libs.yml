@@ -1,4 +1,4 @@
-name: Compile Libraries (macOS/Intel)
+name: Compile Libraries (macOS/Windows)
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
         run: ./mac_build.sh
       - uses: actions/upload-artifact@v2
         with:
-          name: lib
+          name: lib-macos-intel
           path: "libsndfile.dylib"
           retention-days: 7
           if-no-files-found: error
@@ -37,8 +37,8 @@ jobs:
         run: ./mac_build.sh arm64
       - uses: actions/upload-artifact@v2
         with:
-          name: lib
-          path: "libsndfile.dylib"
+          name: lib-macos-arm64
+          path: "libsndfile_arm64.dylib"
           retention-days: 7
           if-no-files-found: error
 
@@ -63,7 +63,7 @@ jobs:
         run: "Copy-Item c:/vcpkg/installed/${{ matrix.triplet }}/bin/sndfile.dll -Destination ${{ matrix.libname }}"
       - uses: actions/upload-artifact@v2
         with:
-          name: lib
+          name: lib-windows
           path: ${{ matrix.libname }}
           retention-days: 7
           if-no-files-found: error
