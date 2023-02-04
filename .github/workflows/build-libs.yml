@@ -1,4 +1,4 @@
-name: Compile Libraries (macOS/Intel)
+name: Compile Libraries (macOS/Windows)
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-libs:
+  build-libs-macos-intel:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -14,13 +14,31 @@ jobs:
       fail-fast: true
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Compile library
         run: ./mac_build.sh
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
-          name: lib
+          name: lib-macos-intel
           path: "libsndfile.dylib"
+          retention-days: 7
+          if-no-files-found: error
+
+  build-libs-macos-arm64:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["macos-11"]
+      fail-fast: true
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Compile library
+        run: ./mac_build.sh arm64
+      - uses: actions/upload-artifact@v3
+        with:
+          name: lib-macos-arm64
+          path: "libsndfile_arm64.dylib"
           retention-days: 7
           if-no-files-found: error
 
@@ -29,23 +47,23 @@ jobs:
     strategy:
       matrix:
         include:
-        - triplet: "x64-windows-custom"
-          libname: "libsndfile_x64.dll"
-        - triplet: "x86-windows-custom"
-          libname: "libsndfile_x86.dll"
+          - triplet: "x64-windows-custom"
+            libname: "libsndfile_x64.dll"
+          - triplet: "x86-windows-custom"
+            libname: "libsndfile_x86.dll"
       fail-fast: true
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Update VCPKG
         run: "vcpkg update"
       - name: Build library
         run: "vcpkg install libsndfile:${{ matrix.triplet }} --overlay-triplets=triplets"
       - name: Copy library
         run: "Copy-Item c:/vcpkg/installed/${{ matrix.triplet }}/bin/sndfile.dll -Destination ${{ matrix.libname }}"
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
-          name: lib
+          name: lib-windows
           path: ${{ matrix.libname }}
           retention-days: 7
           if-no-files-found: error
