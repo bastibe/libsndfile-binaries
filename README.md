@@ -7,37 +7,13 @@ dependencies on other libraries, support for
 [FLAC](https://xiph.org/flac/) and 
 [Ogg Vorbis](http://xiph.org/vorbis/) and 
 [Opus](https://opus-codec.org/) and 
-MP3[encoding](https://lame.sourceforge.io/)/
-[decoding](https://mpg123.org/)
+MP3 [encoding](https://lame.sourceforge.io/)/[decoding](https://mpg123.org/)
 is built-in statically.
 
 
-DLLs for Windows (32-bit and 64-bit)
-------------------------------------
-
-The DLLs are copied from the [libsndfile releases page](https://github.com/libsndfile/libsndfile/releases).
-
-dylib for Mac OS X (64-bit)
----------------------------
-
-The dylib was created on a macOS system using XCode.
-The XCode CLI tools were installed with:
-
-    xcode-select --install
-
-Edit the versions of required libraries in the `mac_build.sh` file
-
-    OGGNAME=libogg-1.3.5
-    VORBISNAME=libvorbis-1.3.7
-    FLACNAME=flac-1.3.3
-    OPUSNAME=opus-1.3.1
-    MPG123VERSION=1.29.3
-    LAMEVERSION=3.100
-    SNDFILE_VERSION=1.1.0
-
-Run the script to build `libsndfile.dylib`
-
-    ./mac_build.sh
+- DLLs for Windows (x86 32-bit and 64-bit)
+- dylib for Mac OS X (x86 64-bit and arm64)
+- so for Linux (x86 64-bit and arm64)
 
 Copyright
 ---------
