@@ -58,6 +58,25 @@ jobs:
           name: lib
           path: "libsndfile.so"
 
+  build-libs-linux-arm:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["ubuntu-20.04"]
+      fail-fast: true
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pguyot/arm-runner-action@v2.5.2
+        name: Compile library
+        with:
+          base_image: raspios_lite_arm64:latest
+          commands: ./linux_build.sh
+      - uses: actions/upload-artifact@v3
+        with:
+          name: lib
+          path: "libsndfile.so"
+
   build-libs-windows:
     runs-on: windows-2019
     strategy:
