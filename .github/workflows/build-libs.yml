@@ -42,7 +42,7 @@ jobs:
           retention-days: 7
           if-no-files-found: error
 
-  build-libs-linux:
+  build-libs-linux-x86_64:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -55,7 +55,30 @@ jobs:
         run: ./linux_build.sh
       - uses: actions/upload-artifact@v3
         with:
-          name: lib
+          name: lib-linux-x86_64
+          path: "libsndfile.so"
+
+  build-libs-linux-arm64:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["ubuntu-20.04"]
+      fail-fast: true
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Compile library
+        uses: pguyot/arm-runner-action@v2
+        with:
+          base_image: raspios_lite_arm64:2022-04-04
+          cpu: cortex-a53
+          cpu_info: cpuinfo/raspberrypi_zero2_w_arm64
+          bind_mount_repository: true
+          commands: |
+            ./linux_build.sh
+      - uses: actions/upload-artifact@v3
+        with:
+          name: lib-linux-arm64
           path: "libsndfile.so"
 
   build-libs-windows:
