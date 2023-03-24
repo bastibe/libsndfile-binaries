@@ -58,6 +58,51 @@ jobs:
           name: lib-linux-x86_64
           path: "libsndfile.so"
 
+  build-libs-linux-x86_64-glibc2_17:
+    runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: true
+    container:
+      image: centos:7
+      env: 
+        # OpenSSL<=1.0.2 is available for CentOS7, so we need to compile OpenSSL and Curl
+        SSL_VERSION: 3.1.0
+        CURL_VERSION: 8.0.1
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install required packages
+        run: |
+          yum install -y gcc gcc-c++ make bzip2 zlib-devel perl-core libmetalink-devel libssh2-devel c-ares-devel lbzip2
+      - name: Compile OpenSSL
+        run : |
+          curl -LO https://www.openssl.org/source/openssl-${SSL_VERSION}.tar.gz
+          tar xvf openssl-${SSL_VERSION}.tar.gz
+          cd openssl-${SSL_VERSION}
+          ./config --prefix=/usr shared zlib-dynamic
+          make
+          make test
+          make install
+          # check version
+          openssl version
+      - name: Compile curl
+        run: |
+          curl -LO https://curl.se/download/curl-${CURL_VERSION}.tar.gz
+          tar xvf curl-${CURL_VERSION}.tar.gz
+          cd curl-${CURL_VERSION}
+          ./configure --enable-libcurl-option --with-openssl
+          make
+          make install
+          rm /usr/bin/curl
+          # check version
+          curl -V
+
+      - name: Compile library
+        run: ./linux_build.sh
+      - uses: actions/upload-artifact@v3
+        with:
+          name: lib-linux-x86_64-glibc2_17
+          path: "libsndfile.so"
+
   build-libs-linux-arm64:
     runs-on: ${{ matrix.os }}
     strategy:
