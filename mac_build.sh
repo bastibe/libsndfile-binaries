@@ -1,10 +1,10 @@
 OGGVERSION=1.3.5
 VORBISVERSION=1.3.7
-FLACVERSION=1.4.2
-OPUSVERSION=1.3.1
-MPG123VERSION=1.30.2
+FLACVERSION=1.4.3
+OPUSVERSION=1.4
+MPG123VERSION=1.32.3
 LAMEVERSION=3.100
-SNDFILE_VERSION=1.2.0
+SNDFILE_VERSION=1.2.2
 
 JOBS=8
 SNDFILENAME=libsndfile-$SNDFILE_VERSION
@@ -53,7 +53,7 @@ cd ..
 
 # libopus
 
-curl -LO https://archive.mozilla.org/pub/opus/opus-$OPUSVERSION.tar.gz
+curl -LO https://downloads.xiph.org/releases/opus/opus-$OPUSVERSION.tar.gz
 tar zxvf opus-$OPUSVERSION.tar.gz
 cd opus-$OPUSVERSION
 ln -sf include opus
