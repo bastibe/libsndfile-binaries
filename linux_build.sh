@@ -13,6 +13,8 @@ SNDFILENAME=libsndfile-$SNDFILE_VERSION
 OGG_INCDIR="$(pwd)/libogg-$OGGVERSION/include"
 OGG_LIBDIR="$(pwd)/libogg-$OGGVERSION/src/.libs"
 
+set -e
+
 # make sure all static libraries are position-independent, so we can link them
 # into the libsndfile.so later:
 export CFLAGS="-fPIC"

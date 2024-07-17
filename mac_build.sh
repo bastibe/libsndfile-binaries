@@ -13,6 +13,8 @@ SNDFILENAME=libsndfile-$SNDFILE_VERSION
 OGG_INCDIR="$(pwd)/libogg-$OGGVERSION/include"
 OGG_LIBDIR="$(pwd)/libogg-$OGGVERSION/src/.libs"
 
+set -e
+
 if [ "$1" = "arm64" ]; then
     echo "Cross compiling for Darwin arm64.."
     export MACOSX_DEPLOYMENT_TARGET=11.0
