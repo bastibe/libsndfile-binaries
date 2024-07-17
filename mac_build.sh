@@ -94,7 +94,7 @@ export OPUS_INCLUDE="$(pwd)/opus-$OPUSVERSION"
 export OPUS_LIBS="$(pwd)/opus-$OPUSVERSION/.libs/libopus.a"
 export MP3LAME_INCLUDE="$(pwd)/lame-$LAMEVERSION"
 export MP3LAME_LIBS="$(pwd)/lame-$LAMEVERSION/libmp3lame/.libs/libmp3lame.a"
-export MPG123_INCLUDE="$(pwd)/mpg123-$MPG123VERSION/src/libmpg123"
+export MPG123_INCLUDE="$(pwd)/mpg123-$MPG123VERSION/src/include"
 export MPG123_LIBS="$(pwd)/mpg123-$MPG123VERSION/src/libmpg123/.libs/libmpg123.a"
 
 curl -LO https://github.com/libsndfile/libsndfile/releases/download/$SNDFILE_VERSION/libsndfile-$SNDFILE_VERSION.tar.xz

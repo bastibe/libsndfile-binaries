@@ -84,7 +84,7 @@ export OPUS_CFLAGS="-I$(pwd)/opus-$OPUSVERSION/include/"
 export OPUS_LIBS="-L$(pwd)/opus-$OPUSVERSION/.libs/ -lopus"
 export LAME_CFLAGS="-I$(pwd)/lame-$LAMEVERSION/include/"
 export LAME_LIBS="-L$(pwd)/lame-$LAMEVERSION/libmp3lame/.libs/"
-export MPG123_CFLAGS="-I$(pwd)/mpg123-$MPG123VERSION/src/libmpg123/ $LAME_CFLAGS"
+export MPG123_CFLAGS="-I$(pwd)/mpg123-$MPG123VERSION/src/include/ $LAME_CFLAGS"
 export MPG123_LIBS="-L$(pwd)/mpg123-$MPG123VERSION/src/libmpg123/.libs/ -lmpg123 -lmp3lame $LAME_LIBS"
 
 # add some global flags that libsndfile's compile script doesn't pick up
