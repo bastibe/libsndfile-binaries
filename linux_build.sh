@@ -25,7 +25,7 @@ export LDFLAGS="-fPIC"
 curl -LO https://downloads.xiph.org/releases/ogg/libogg-$OGGVERSION.tar.gz
 tar xvf libogg-$OGGVERSION.tar.gz
 cd libogg-$OGGVERSION
-./configure --disable-shared
+./configure --disable-shared $CONFIGURE_FLAGS
 make -j$JOBS
 cd ..
 
@@ -37,7 +37,7 @@ export OGG_LIBS="-L$OGG_LIBDIR -logg"
 curl -LO https://downloads.xiph.org/releases/vorbis/libvorbis-$VORBISVERSION.tar.gz
 tar xvf libvorbis-$VORBISVERSION.tar.gz
 cd libvorbis-$VORBISVERSION
-./configure --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR
+./configure --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR $CONFIGURE_FLAGS
 make -j$JOBS
 cd ..
 
@@ -46,7 +46,7 @@ cd ..
 curl -LO https://downloads.xiph.org/releases/flac/flac-$FLACVERSION.tar.xz
 tar xvf flac-$FLACVERSION.tar.xz
 cd flac-$FLACVERSION
-./configure --enable-static --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR
+./configure --enable-static --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR $CONFIGURE_FLAGS
 make -j$JOBS
 cd ..
 
@@ -55,7 +55,7 @@ cd ..
 curl -LO https://downloads.xiph.org/releases/opus/opus-$OPUSVERSION.tar.gz
 tar xvf opus-$OPUSVERSION.tar.gz
 cd opus-$OPUSVERSION
-./configure --disable-shared
+./configure --disable-shared $CONFIGURE_FLAGS
 make -j$JOBS
 cd ..
 
@@ -64,7 +64,7 @@ cd ..
 curl -LO https://sourceforge.net/projects/mpg123/files/mpg123/$MPG123VERSION/mpg123-$MPG123VERSION.tar.bz2
 tar xvf mpg123-$MPG123VERSION.tar.bz2
 cd mpg123-$MPG123VERSION
-./configure --enable-static --disable-shared
+./configure --enable-static --disable-shared $CONFIGURE_FLAGS
 make -j$JOBS
 cd ..
 
@@ -73,7 +73,7 @@ cd ..
 curl -LO https://sourceforge.net/projects/lame/files/lame/$LAMEVERSION/lame-$LAMEVERSION.tar.gz
 tar xvf lame-$LAMEVERSION.tar.gz
 cd lame-$LAMEVERSION
-./configure --enable-static --disable-shared
+./configure --enable-static --disable-shared $CONFIGURE_FLAGS
 make -j$JOBS
 cd ..
 
@@ -108,7 +108,7 @@ cp lame-$LAMEVERSION/include/*.h lame-$LAMEVERSION/include/lame
 curl -LO https://github.com/libsndfile/libsndfile/releases/download/$SNDFILE_VERSION/libsndfile-$SNDFILE_VERSION.tar.xz
 tar xvf libsndfile-$SNDFILE_VERSION.tar.xz
 cd $SNDFILENAME
-./configure --disable-static --disable-sqlite --disable-alsa --enable-external-libs --enable-mpeg
+./configure --disable-static --disable-sqlite --disable-alsa --enable-external-libs --enable-mpeg $CONFIGURE_FLAGS
 make -j$JOBS
 cd ..
 

@@ -75,22 +75,25 @@ jobs:
 
   build-libs-linux-arm64:
     runs-on: ${{ matrix.os }}
+    container: debian:10
     strategy:
       matrix:
         os: ["ubuntu-20.04"]
       fail-fast: true
 
     steps:
+      - name: Install aarch64-linux-gnu cross-compiler
+        run: |
+          apt-get update
+          apt-get install -y build-essential \
+                             curl \
+                             python3 \
+                             g++-aarch64-linux-gnu
       - uses: actions/checkout@v3
       - name: Compile library
-        uses: pguyot/arm-runner-action@v2
-        with:
-          base_image: raspios_lite_arm64:2022-04-04
-          cpu: cortex-a53
-          cpu_info: cpuinfo/raspberrypi_zero2_w_arm64
-          bind_mount_repository: true
-          commands: |
-            ./linux_build.sh
+        run: |
+          export CONFIGURE_FLAGS="--host=aarch64-linux-gnu --build=x86_64-linux-gnu"
+          ./linux_build.sh
       - uses: actions/upload-artifact@v3
         with:
           name: lib-linux-arm64
