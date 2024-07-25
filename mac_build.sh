@@ -38,6 +38,9 @@ cd ..
 
 # libvorbis
 
+export OGG_CFLAGS="-I$OGG_INCDIR"
+export OGG_LIBS="-L$OGG_LIBDIR -logg"
+
 curl -LO https://downloads.xiph.org/releases/vorbis/libvorbis-$VORBISVERSION.tar.gz
 tar zxvf libvorbis-$VORBISVERSION.tar.gz
 cd libvorbis-$VORBISVERSION
