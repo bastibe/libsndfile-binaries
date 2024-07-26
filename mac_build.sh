@@ -44,6 +44,7 @@ export OGG_LIBS="-L$OGG_LIBDIR -logg"
 curl -LO https://downloads.xiph.org/releases/vorbis/libvorbis-$VORBISVERSION.tar.gz
 tar zxvf libvorbis-$VORBISVERSION.tar.gz
 cd libvorbis-$VORBISVERSION
+sed -e 's/ -force_cpusubtype_ALL / /' -i.orig configure
 CFLAGS=$EXTRA_CFLAGS CXXFLAGS=$EXTRA_CFLAGS ./configure $BUILD_HOST --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR
 make -j$JOBS
 cd ..
