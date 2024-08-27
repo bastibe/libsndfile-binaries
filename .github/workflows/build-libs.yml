@@ -76,7 +76,26 @@ jobs:
         with:
           name: lib
           path: "libsndfile.so"
+          
+  build-libs-linux-aarch64:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["ubuntu-22.04"]
+      fail-fast: true
 
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pguyot/arm-runner-action@v2.5.2
+        name: Compile library
+        with:
+          base_image: arm64v8/ubuntu:22.04
+          commands: ./linux_build.sh
+      - uses: actions/upload-artifact@v3
+        with:
+          name: lib
+          path: "libsndfile.so"
+          
   build-libs-windows:
     runs-on: windows-2019
     strategy:
