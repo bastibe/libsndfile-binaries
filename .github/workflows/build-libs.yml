@@ -104,10 +104,12 @@ jobs:
     strategy:
       matrix:
         include:
-          - triplet: "x64-windows-custom"
+          - triplet: "x64-windows"
             libname: "libsndfile_x64.dll"
-          - triplet: "x86-windows-custom"
+          - triplet: "x86-windows"
             libname: "libsndfile_x86.dll"
+          - triplet: "arm64-windows"
+            libname: "libsndfile_arm64.dll"
       fail-fast: true
 
     steps:
