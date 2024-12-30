@@ -104,14 +104,14 @@ jobs:
     strategy:
       matrix:
         include:
-          - triplet: "x64-windows"
+          # see ./triplets/README.md for info on "custom" triplets:
+          - triplet: "x64-windows-custom"
             libname: "libsndfile_x64.dll"
-          - triplet: "x86-windows"
+          - triplet: "x86-windows-custom"
             libname: "libsndfile_x86.dll"
-          - triplet: "arm64-windows"
+          - triplet: "arm64-windows-custom"
             libname: "libsndfile_arm64.dll"
       fail-fast: true
-
     steps:
       - uses: actions/checkout@v3
       - name: Update VCPKG
