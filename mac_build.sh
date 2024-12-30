@@ -1,3 +1,5 @@
+#!/bin/sh
+
 OGGVERSION=1.3.5
 VORBISVERSION=1.3.7
 FLACVERSION=1.4.3
@@ -10,6 +12,8 @@ JOBS=8
 SNDFILENAME=libsndfile-$SNDFILE_VERSION
 OGG_INCDIR="$(pwd)/libogg-$OGGVERSION/include"
 OGG_LIBDIR="$(pwd)/libogg-$OGGVERSION/src/.libs"
+
+set -e
 
 if [ "$1" = "arm64" ]; then
     echo "Cross compiling for Darwin arm64.."
@@ -34,9 +38,13 @@ cd ..
 
 # libvorbis
 
+export OGG_CFLAGS="-I$OGG_INCDIR"
+export OGG_LIBS="-L$OGG_LIBDIR -logg"
+
 curl -LO https://downloads.xiph.org/releases/vorbis/libvorbis-$VORBISVERSION.tar.gz
 tar zxvf libvorbis-$VORBISVERSION.tar.gz
 cd libvorbis-$VORBISVERSION
+sed -e 's/ -force_cpusubtype_ALL / /' -i.orig configure
 CFLAGS=$EXTRA_CFLAGS CXXFLAGS=$EXTRA_CFLAGS ./configure $BUILD_HOST --disable-shared --with-ogg-includes=$OGG_INCDIR --with-ogg-libraries=$OGG_LIBDIR
 make -j$JOBS
 cd ..
