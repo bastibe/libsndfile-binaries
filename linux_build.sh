@@ -3,8 +3,8 @@
 OGGVERSION=1.3.5
 VORBISVERSION=1.3.7
 FLACVERSION=1.4.3
-OPUSVERSION=1.4
-MPG123VERSION=1.32.3
+OPUSVERSION=1.5.2
+MPG123VERSION=1.32.6
 LAMEVERSION=3.100
 SNDFILE_VERSION=1.2.2
 
@@ -91,7 +91,7 @@ export OPUS_CFLAGS="-I$(pwd)/opus-$OPUSVERSION/include/"
 export OPUS_LIBS="-L$(pwd)/opus-$OPUSVERSION/.libs/ -lopus"
 export LAME_CFLAGS="-I$(pwd)/lame-$LAMEVERSION/include/"
 export LAME_LIBS="-L$(pwd)/lame-$LAMEVERSION/libmp3lame/.libs/"
-export MPG123_CFLAGS="-I$(pwd)/mpg123-$MPG123VERSION/src/libmpg123/ $LAME_CFLAGS"
+export MPG123_CFLAGS="-I$(pwd)/mpg123-$MPG123VERSION/src/include/ $LAME_CFLAGS"
 export MPG123_LIBS="-L$(pwd)/mpg123-$MPG123VERSION/src/libmpg123/.libs/ -lmpg123 -lmp3lame $LAME_LIBS"
 
 # add some global flags that libsndfile's compile script doesn't pick up
