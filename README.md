@@ -13,7 +13,7 @@ is built-in statically.
 
 - DLLs for Windows (x86 32-bit and 64-bit)
 - dylib for Mac OS X (x86 64-bit and arm64)
-- so for Linux (x86 64-bit and arm64)
+- so for Linux (x86 64-bit, arm64, riscv64)
 
 Copyright
 ---------
