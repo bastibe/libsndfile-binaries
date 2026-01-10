@@ -10,14 +10,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ["macos-13"]
+        os: ["macos-15"]
       fail-fast: true
 
     steps:
       - uses: actions/checkout@v3
       - name: Compile library
         run: ./mac_build.sh
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: lib-macos-intel
           path: "libsndfile.dylib"
@@ -28,14 +28,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ["macos-14"]
+        os: ["macos-15"]
       fail-fast: true
 
     steps:
       - uses: actions/checkout@v3
       - name: Compile library
         run: ./mac_build.sh arm64
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: lib-macos-arm64
           path: "libsndfile_arm64.dylib"
@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Compile library
         run: ./linux_build.sh
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: lib-linux-x86_64
           path: "libsndfile.so"
@@ -68,7 +68,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Compile library
         run: ./linux_build.sh
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: lib-linux-x86_64-glibc2_28
           path: "libsndfile.so"
@@ -95,7 +95,7 @@ jobs:
         run: |
           export CONFIGURE_FLAGS="--host=aarch64-linux-gnu --build=x86_64-linux-gnu"
           ./linux_build.sh
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: lib-linux-arm64
           path: "libsndfile.so"
@@ -122,7 +122,7 @@ jobs:
         run: |
           export CONFIGURE_FLAGS="--host=riscv64-linux-gnu --build=x86_64-linux-gnu"
           ./linux_build.sh
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: lib-linux-riscv64
           path: "libsndfile.so"
@@ -148,7 +148,7 @@ jobs:
         run: "vcpkg install libsndfile:${{ matrix.triplet }} --overlay-triplets=triplets"
       - name: Copy library
         run: "Copy-Item c:/vcpkg/installed/${{ matrix.triplet }}/bin/sndfile.dll -Destination ${{ matrix.libname }}"
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: lib-windows
           path: ${{ matrix.libname }}
