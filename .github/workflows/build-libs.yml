@@ -100,6 +100,33 @@ jobs:
           name: lib-linux-arm64
           path: "libsndfile.so"
 
+  build-libs-linux-riscv64:
+    runs-on: ${{ matrix.os }}
+    container: debian:12
+    strategy:
+      matrix:
+        os: ["ubuntu-20.04"]
+      fail-fast: true
+
+    steps:
+      - name: Install riscv64-linux-gnu cross-compiler
+        run: |
+          apt-get update
+          apt-get install -y build-essential \
+                             curl \
+                             python3 \
+                             g++-riscv64-linux-gnu \
+                             pkg-config
+      - uses: actions/checkout@v3
+      - name: Compile library
+        run: |
+          export CONFIGURE_FLAGS="--host=riscv64-linux-gnu --build=x86_64-linux-gnu"
+          ./linux_build.sh
+      - uses: actions/upload-artifact@v3
+        with:
+          name: lib-linux-riscv64
+          path: "libsndfile.so"
+
   build-libs-windows:
     runs-on: windows-2019
     strategy:
