@@ -1,10 +1,10 @@
 #!/bin/sh
 
-OGGVERSION=1.3.5
+OGGVERSION=1.3.6
 VORBISVERSION=1.3.7
-FLACVERSION=1.4.3
-OPUSVERSION=1.4
-MPG123VERSION=1.32.3
+FLACVERSION=1.5.0
+OPUSVERSION=1.5.2
+MPG123VERSION=1.33.4
 LAMEVERSION=3.100
 SNDFILE_VERSION=1.2.2
 
@@ -16,12 +16,17 @@ OGG_LIBDIR="$(pwd)/libogg-$OGGVERSION/src/.libs"
 set -e
 
 if [ "$1" = "arm64" ]; then
-    echo "Cross compiling for Darwin arm64.."
+    echo "compiling for Darwin arm64.."
     export MACOSX_DEPLOYMENT_TARGET=11.0
     BUILD_HOST="--host=aarch64-apple-darwin --target=arm64-apple-macos11"
     EXTRA_CFLAGS="-arch arm64 -target arm64-apple-macos11"
+elif [ "$1" = "x86_64" ]; then
+    echo "compiling for Darwin x86_64.."
+    export MACOSX_DEPLOYMENT_TARGET=11.0
+    BUILD_HOST="--host=x86_64-apple-darwin --target=x86_64-apple-macos11"
+    EXTRA_CFLAGS="-arch x86_64 -target x86_64-apple-macos11"
 else
-    echo "Building for Darwin $(uname -m).."
+    echo "compiling for Darwin $(uname -m).."
     export MACOSX_DEPLOYMENT_TARGET=10.9
     BUILD_HOST=""
     EXTRA_CFLAGS=""
@@ -102,16 +107,16 @@ export OPUS_INCLUDE="$(pwd)/opus-$OPUSVERSION"
 export OPUS_LIBS="$(pwd)/opus-$OPUSVERSION/.libs/libopus.a"
 export MP3LAME_INCLUDE="$(pwd)/lame-$LAMEVERSION"
 export MP3LAME_LIBS="$(pwd)/lame-$LAMEVERSION/libmp3lame/.libs/libmp3lame.a"
-export MPG123_INCLUDE="$(pwd)/mpg123-$MPG123VERSION/src/libmpg123"
+export MPG123_INCLUDE="$(pwd)/mpg123-$MPG123VERSION/src/include"
 export MPG123_LIBS="$(pwd)/mpg123-$MPG123VERSION/src/libmpg123/.libs/libmpg123.a"
 
 curl -LO https://github.com/libsndfile/libsndfile/releases/download/$SNDFILE_VERSION/libsndfile-$SNDFILE_VERSION.tar.xz
 tar jxvf libsndfile-$SNDFILE_VERSION.tar.xz
 cd $SNDFILENAME
 if [ "$1" = "arm64" ]; then
-cmake -DCMAKE_OSX_ARCHITECTURES=arm64 -DBUILD_SHARED_LIBS=ON -DENABLE_EXTERNAL_LIBS=ON -DENABLE_MPEG=ON -DBUILD_PROGRAMS=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_PROJECT_INCLUDE=../darwin.cmake .
+cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_OSX_ARCHITECTURES=arm64 -DBUILD_SHARED_LIBS=ON -DENABLE_EXTERNAL_LIBS=ON -DENABLE_MPEG=ON -DBUILD_PROGRAMS=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_PROJECT_INCLUDE=../darwin.cmake .
 else
-cmake -DCMAKE_OSX_ARCHITECTURES=x86_64 -DBUILD_SHARED_LIBS=ON -DENABLE_EXTERNAL_LIBS=ON -DENABLE_MPEG=ON -DBUILD_PROGRAMS=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_PROJECT_INCLUDE=../darwin.cmake .
+cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_OSX_ARCHITECTURES=x86_64 -DBUILD_SHARED_LIBS=ON -DENABLE_EXTERNAL_LIBS=ON -DENABLE_MPEG=ON -DBUILD_PROGRAMS=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_PROJECT_INCLUDE=../darwin.cmake .
 fi
 cmake --build . --parallel $JOBS
 cd ..
