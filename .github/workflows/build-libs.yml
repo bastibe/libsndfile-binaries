@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Compile library
-        run: ./mac_build.sh
+        run: ./mac_build.sh x86_64
       - uses: actions/upload-artifact@v4
         with:
           name: lib-macos-intel
