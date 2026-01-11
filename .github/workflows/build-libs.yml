@@ -46,7 +46,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ["ubuntu-20.04"]
+        os: ["ubuntu-22.04"]
       fail-fast: true
 
     steps:
@@ -75,10 +75,10 @@ jobs:
 
   build-libs-linux-arm64:
     runs-on: ${{ matrix.os }}
-    container: debian:10
+    container: debian:12
     strategy:
       matrix:
-        os: ["ubuntu-20.04"]
+        os: ["ubuntu-22.04"]
       fail-fast: true
 
     steps:
@@ -105,7 +105,7 @@ jobs:
     container: debian:12
     strategy:
       matrix:
-        os: ["ubuntu-20.04"]
+        os: ["ubuntu-22.04"]
       fail-fast: true
 
     steps:
